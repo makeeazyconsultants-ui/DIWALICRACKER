@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light the Cracker Within - Diwali 2024</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #DDE6FF 0%, #ffffff 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            padding: 32px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 16px;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .brand-name {
+            color: #F77F00;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            color: #32509F;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        h2 {
+            color: #32509F;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        /* Cone Cracker Progress */
+        .cracker-progress-container {
+            position: relative;
+            margin-bottom: 32px;
+            padding: 0 20px;
+        }
+
+        .fuse-line {
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #8B4513 0%, #654321 100%);
+            border-radius: 3px;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 80px;
+        }
+
+        .fuse-spark {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            transition: left 0.5s ease;
+        }
+
+        .spark-flame {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #FFD700 0%, #FF6B00 30%, #FF0000 60%, transparent 80%);
+            border-radius: 50%;
+            animation: flicker 0.15s infinite alternate;
+            filter: blur(1px);
+        }
+
+        .spark-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 8px;
+            background: #FFFFFF;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #FFD700, 0 0 16px #FF6B00;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(0deg); opacity: 0.9; }
+            100% { transform: scale(1.4) rotate(15deg); opacity: 1; }
+        }
+
+        .cone-cracker {
+            position: absolute;
+            right: -60px;
+            top: -25px;
+            filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.2));
+        }
+
+        /* Cracker Display */
+        .cracker-display {
+            margin: 32px 0;
+            position: relative;
+        }
+
+        /* Sweet Image */
+        .sweet-image {
+            width: 240px;
+            height: 240px;
+            margin: 16px auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+
+        /* Sparkle Animation */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .sparkle-line {
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            border-radius: 2px;
+            transform-origin: center;
+        }
+
+        @keyframes sparkle-shoot {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0.3);
+            }
+        }
+
+        .star-sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 20px;
+        }
+
+        @keyframes star-float {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) rotate(360deg) scale(0.5);
+            }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            z-index: 9998;
+            pointer-events: none;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Blast Overlay */
+        .blast-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 9997;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .blast-container {
+            position: relative;
+            z-index: 9998;
+        }
+
+        .blast-screen {
+            font-size: 120px;
+            animation: blastPulse 0.5s infinite;
+            text-shadow: 0 0 40px rgba(255, 107, 0, 0.8);
+        }
+
+        @keyframes blastPulse {
+            0%, 100% { transform: scale(1) rotate(-5deg); }
+            50% { transform: scale(1.4) rotate(5deg); }
+        }
+
+        .blast-wave {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border: 3px solid #F77F00;
+            border-radius: 50%;
+            animation: blast-wave 1s ease-out infinite;
+        }
+
+        @keyframes blast-wave {
+            0% {
+                width: 80px;
+                height: 80px;
+                opacity: 1;
+            }
+            100% {
+                width: 350px;
+                height: 350px;
+                opacity: 0;
+            }
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid #32509F;
+            border-radius: 12px;
+            font-size: 16px;
+            text-align: center;
+            color: #32509F;
+            margin-bottom: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #F77F00;
+            box-shadow: 0 0 0 3px rgba(247, 127, 0, 0.1);
+        }
+
+        input.error {
+            border-color: #DC2626;
+        }
+
+        .error-text {
+            color: #DC2626;
+            font-size: 13px;
+            margin-top: -10px;
+            margin-bottom: 16px;
+        }
+
+        button {
+            background: #F77F00;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(247, 127, 0, 0.3);
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(247, 127, 0, 0.4);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #32509F;
+            border: 2px solid #32509F;
+            margin-top: 10px;
+            box-shadow: none;
+        }
+
+        .btn-primary {
+            background: #32509F;
+            box-shadow: 0 4px 12px rgba(50, 80, 159, 0.3);
+        }
+
+        .btn-back {
+            background: white;
+            color: #F77F00;
+            border: 2px solid #F77F00;
+            margin-top: 10px;
+            font-size: 15px;
+            padding: 12px 24px;
+            box-shadow: none;
+        }
+
+        .options {
+            display: grid;
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #32509F;
+            color: #32509F;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 15px;
+            text-align: left;
+            transition: all 0.3s;
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .option-btn:hover {
+            background: #DDE6FF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(50, 80, 159, 0.2);
+        }
+
+        .option-btn:active {
+            transform: translateY(0);
+        }
+
+        .question-counter {
+            color: #F77F00;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .result-card {
+            max-width: 800px;
+        }
+
+        .result-title {
+            font-size: 40px;
+            color: #F77F00;
+            font-weight: bold;
+            margin: 16px 0;
+        }
+
+        .result-subtitle {
+            font-size: 22px;
+            color: #32509F;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .result-message {
+            font-size: 20px;
+            color: #32509F;
+            font-weight: 500;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .custom-line {
+            font-size: 16px;
+            color: #4B5563;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .footer-message {
+            font-size: 18px;
+            color: #32509F;
+            font-weight: 600;
+            font-style: italic;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px solid #DDE6FF;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .invite-section {
+            background: white;
+            border-radius: 14px;
+            padding: 24px;
+            margin-top: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .disclaimer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 16px;
+        }
+
+        .disclaimer-overlay.show {
+            opacity: 1;
+        }
+
+        .disclaimer-overlay.hide {
+            opacity: 0;
+        }
+
+        .disclaimer-card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .disclaimer-overlay.show .disclaimer-card {
+            transform: scale(1);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            body {
+                padding: 12px;
+            }
+            .card {
+                padding: 24px 20px;
+            }
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+            .brand-name {
+                font-size: 24px;
+            }
+            h1 {
+                font-size: 28px;
+                margin-bottom: 20px;
+            }
+            h2 {
+                font-size: 20px;
+                line-height: 1.3;
+            }
+            .result-title {
+                font-size: 32px;
+            }
+            .result-subtitle {
+                font-size: 18px;
+            }
+            .result-message {
+                font-size: 17px;
+            }
+            .custom-line {
+                font-size: 15px;
+            }
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+            .sweet-image {
+                width: 200px;
+                height: 200px;
+            }
+            .cracker-progress-container {
+                padding: 0 12px;
+            }
+            .cone-cracker {
+                right: -50px;
+                top: -20px;
+            }
+            .blast-screen {
+                font-size: 100px;
+            }
+            .option-btn {
+                font-size: 14px;
+                padding: 14px;
+            }
+            button {
+                font-size: 16px;
+                padding: 12px 24px;
+            }
+            .disclaimer-card {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 24px;
+            }
+            .logo {
+                width: 90px;
+                height: 90px;
+            }
+            .brand-name {
+                font-size: 22px;
+            }
+            .sweet-image {
+                width: 180px;
+                height: 180px;
+            }
+            .cone-cracker {
+                right: -45px;
+                transform: scale(0.9);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Disclaimer Overlay -->
+    <div id="disclaimer" class="disclaimer-overlay hidden">
+        <div class="disclaimer-card">
+            <div style="font-size: 64px; margin-bottom: 16px;">🔥</div>
+            <h2>Cracker lit!</h2>
+            <p style="font-size: 16px; color: #4B5563; margin: 16px 0; line-height: 1.6;">
+                Give 5 quick responses to make it burst into colors.
+            </p>
+            <p style="font-size: 16px; color: #4B5563; margin: 16px 0; line-height: 1.6;">
+                Your responses are <strong>NOT stored anywhere</strong> — answer honestly for the best blast.
+            </p>
+        </div>
+    </div>
+
+    <!-- Landing Screen -->
+    <div id="landing" class="container">
+        <div class="cracker-progress-container">
+            <div class="fuse-line">
+                <div class="fuse-spark" style="left: 0%;">
+                    <div class="spark-flame"></div>
+                    <div class="spark-core"></div>
+                </div>
+            </div>
+            <div class="cone-cracker">
+                <svg width="120" height="140" viewBox="0 0 120 140">
+                    <defs>
+                        <linearGradient id="stripeRed" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#8B1538;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#6B0F2A;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="stripeYellow" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Cone body with stripes -->
+                    <path d="M 60 20 L 30 120 L 90 120 Z" fill="#8B1538"/>
+                    <!-- Yellow stripes -->
+                    <path d="M 60 20 L 35 95 L 85 95 L 84 100 L 36 100 L 30 120 L 90 120 L 60 20 Z" fill="url(#stripeYellow)"/>
+                    <path d="M 60 20 L 40 75 L 80 75 L 79 80 L 41 80 L 35 95 L 85 95 L 60 20 Z" fill="url(#stripeRed)"/>
+                    <path d="M 60 20 L 45 55 L 75 55 L 74 60 L 46 60 L 40 75 L 80 75 L 60 20 Z" fill="url(#stripeYellow)"/>
+                    <path d="M 60 20 L 50 35 L 70 35 L 69 40 L 51 40 L 45 55 L 75 55 L 60 20 Z" fill="url(#stripeRed)"/>
+                    <!-- Orange bottom edge -->
+                    <polygon points="30,120 90,120 85,125 35,125" fill="#FFA500"/>
+                    <!-- Fuse -->
+                    <line x1="60" y1="20" x2="60" y2="5" stroke="#654321" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="60" cy="5" r="4" fill="#FF6B00">
+                        <animate attributeName="r" values="4;6;4" dur="0.4s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="logo">
+                <img src="https://framerusercontent.com/images/otpXuKdG3uW4Up8ICaqstwvlg4o.png?scale-down-to=512" alt="Make Eazy">
+            </div>
+            <div class="brand-name">MAKE EAZY</div>
+            <h1>Light the Cracker Within! 🎇</h1>
+            
+            <div class="cracker-display">
+                <svg width="140" height="160" viewBox="0 0 120 140">
+                    <path d="M 60 20 L 30 120 L 90 120 Z" fill="#8B1538"/>
+                    <path d="M 60 20 L 35 95 L 85 95 L 84 100 L 36 100 L 30 120 L 90 120 L 60 20 Z" fill="url(#stripeYellow)"/>
+                    <path d="M 60 20 L 40 75 L 80 75 L 79 80 L 41 80 L 35 95 L 85 95 L 60 20 Z" fill="url(#stripeRed)"/>
+                    <path d="M 60 20 L 45 55 L 75 55 L 74 60 L 46 60 L 40 75 L 80 75 L 60 20 Z" fill="url(#stripeYellow)"/>
+                    <path d="M 60 20 L 50 35 L 70 35 L 69 40 L 51 40 L 45 55 L 75 55 L 60 20 Z" fill="url(#stripeRed)"/>
+                    <polygon points="30,120 90,120 85,125 35,125" fill="#FFA500"/>
+                    <line x1="60" y1="20" x2="60" y2="5" stroke="#654321" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="60" cy="5" r="4" fill="#FF6B00">
+                        <animate attributeName="r" values="4;6;4" dur="0.4s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+            </div>
+
+            <input type="text" id="nameInput" placeholder="Name" maxlength="30">
+            <div id="nameError" class="error-text hidden"></div>
+            <button id="startBtn" onclick="handleStart()">Light It! 🔥</button>
+        </div>
+    </div>
+
+    <!-- Questions Screen -->
+    <div id="questions" class="container hidden">
+        <div class="cracker-progress-container">
+            <div class="fuse-line">
+                <div id="questionSpark" class="fuse-spark" style="left: 0%;">
+                    <div class="spark-flame"></div>
+                    <div class="spark-core"></div>
+                </div>
+            </div>
+            <div class="cone-cracker">
+                <svg width="120" height="140" viewBox="0 0 120 140">
+                    <defs>
+                        <linearGradient id="stripeRed2" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#8B1538;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#6B0F2A;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="stripeYellow2" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M 60 20 L 30 120 L 90 120 Z" fill="#8B1538"/>
+                    <path d="M 60 20 L 35 95 L 85 95 L 84 100 L 36 100 L 30 120 L 90 120 L 60 20 Z" fill="url(#stripeYellow2)"/>
+                    <path d="M 60 20 L 40 75 L 80 75 L 79 80 L 41 80 L 35 95 L 85 95 L 60 20 Z" fill="url(#stripeRed2)"/>
+                    <path d="M 60 20 L 45 55 L 75 55 L 74 60 L 46 60 L 40 75 L 80 75 L 60 20 Z" fill="url(#stripeYellow2)"/>
+                    <path d="M 60 20 L 50 35 L 70 35 L 69 40 L 51 40 L 45 55 L 75 55 L 60 20 Z" fill="url(#stripeRed2)"/>
+                    <polygon points="30,120 90,120 85,125 35,125" fill="#FFA500"/>
+                    <line x1="60" y1="20" x2="60" y2="5" stroke="#654321" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="60" cy="5" r="4" fill="#FF6B00"/>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div id="questionCounter" class="question-counter"></div>
+            <h2 id="questionText"></h2>
+            <div id="optionsContainer" class="options"></div>
+            <button id="backBtn" class="btn-back" onclick="goBackQuestion()" style="display: none;">
+                ← Go Back & Change Answer
+            </button>
+        </div>
+    </div>
+
+    <!-- Blast Screen -->
+    <div id="blast" class="blast-overlay hidden">
+        <div class="blast-container">
+            <div class="blast-screen">💥</div>
+            <div class="blast-wave"></div>
+            <div class="blast-wave" style="animation-delay: 0.2s;"></div>
+            <div class="blast-wave" style="animation-delay: 0.4s;"></div>
+        </div>
+    </div>
+
+    <!-- Result Card -->
+    <div id="result" class="container hidden">
+        <div class="card result-card" id="downloadCard">
+            <div class="logo" style="margin: 0 auto 8px;">
+                <img src="https://framerusercontent.com/images/otpXuKdG3uW4Up8ICaqstwvlg4o.png?scale-down-to=512" alt="Make Eazy">
+            </div>
+            <div class="brand-name" style="font-size: 18px;">Light the Cracker Within!</div>
+            <h1 style="color: #32509F; font-size: 36px; margin: 12px 0;">Happy Diwali!</h1>
+            <h2 style="color: #F77F00; font-size: 32px; margin: 8px 0 16px 0;" id="userName"></h2>
+            
+            <img id="sweetImage" class="sweet-image" src="" alt="Sweet">
+            
+            <div class="result-title" id="resultSweet"></div>
+            <div class="result-subtitle" id="resultTitle"></div>
+            <p class="result-message" id="resultMessage"></p>
+            <div id="customLines"></div>
+            <div class="footer-message">
+                Every sweet glows differently — so do you.
+                <div style="margin-top: 16px; font-size: 13px; color: #F77F00;">MAKE EAZY</div>
+            </div>
+        </div>
+
+        <div class="button-grid">
+            <button class="btn-primary" onclick="downloadCard()">
+                📥 Download Card
+            </button>
+            <button onclick="shareCard()">
+                📤 Share My Card
+            </button>
+        </div>
+
+        <div class="button-grid" style="margin-top: 12px;">
+            <button class="btn-back" onclick="retakeQuiz()" style="width: 100%; grid-column: 1 / -1;">
+                🔄 Retake Quiz
+            </button>
+        </div>
+
+        <div class="invite-section">
+            <p style="font-size: 16px; font-weight: 600; color: #32509F; margin-bottom: 8px;">
+                🎁 Invite Friends to Play
+            </p>
+            <p style="color: #6B7280; margin-bottom: 16px; font-size: 14px;">
+                Share this Diwali gift with your loved ones!
+            </p>
+            <button style="background: #DDE6FF; color: #32509F; width: auto; padding: 10px 28px; font-size: 15px;" onclick="shareCard()">
+                Invite Friends 🎇
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        let userName = '';
+        let answers = {};
+        let currentQuestion = 0;
+        let resultData = null;
+
+        // Initialize - log for debugging
+        console.log('🎇 Diwali Cracker Game Loaded');
+        console.log('Make sure sweet images are in the same folder as this HTML file:');
+        console.log('- jalebi.png, laddu.png, kaja.png');
+        console.log('- gulabjamun.png, pootharekulu.png, bobbatlu.png');
+
+        // TODO: Replace these URLs with your Imgur direct links after uploading
+        const sweetImages = {
+            jalebi: 'https://i.imgur.com/NY5QUQs.png',
+            laddu: 'https://i.imgur.com/kAOYFVM.png',
+            kaja: 'https://i.imgur.com/xA3gnAQ.png',
+            gulab: 'https://i.imgur.com/hIuZMOj.png',
+            pootharekulu: 'https://i.imgur.com/tFONffe.png',
+            bobbatlu: 'https://i.imgur.com/NfuocXK.png'
+        };
+        
+        // Fallback emojis if images fail to load
+        const sweetEmojis = {
+            jalebi: '🥨',
+            laddu: '🌕',
+            kaja: '🥐',
+            gulab: '🟤',
+            pootharekulu: '🪨',
+            bobbatlu: '🫓'
+        };
+
+        const config = {
+            sweets: {
+                P: { 
+                    name: 'Pootharekulu', 
+                    title: 'The Calm Thinker', 
+                    msg: 'Quiet outside, powerful inside. Slow glows last longest.',
+                    image: sweetImages.pootharekulu
+                },
+                B: { 
+                    name: 'Bobbatlu', 
+                    title: 'The Warm Soul', 
+                    msg: 'You comfort and restore. Save a slice of that warmth for yourself.',
+                    image: sweetImages.bobbatlu
+                },
+                L: { 
+                    name: 'Laddu', 
+                    title: 'The Joy Giver', 
+                    msg: 'You make messes feel festive. Your laughter is a light.',
+                    image: sweetImages.laddu
+                },
+                K: { 
+                    name: 'Kaja', 
+                    title: 'The Achiever', 
+                    msg: 'Crisp under pressure. You didn\'t break—you caramelized.',
+                    image: sweetImages.kaja
+                },
+                J: { 
+                    name: 'Jalebi', 
+                    title: 'The Spirited One', 
+                    msg: 'Twists, turns, still sweet. Your optimism is the plot twist.',
+                    image: sweetImages.jalebi
+                },
+                G: { 
+                    name: 'Gulab Jamun', 
+                    title: 'The Soft Healer', 
+                    msg: 'Soft isn\'t weak. Your kindness holds things together.',
+                    image: sweetImages.gulab
+                }
+            },
+            weights: { Q1: 1.5, Q2: 1, Q3: 1.5, Q4: 1, Q5: 1 },
+            map: {
+                Q1: { A: 'P', B: 'B', C: 'J', D: 'K' },
+                Q2: { A: 'J', B: 'K', C: 'L', D: 'P' },
+                Q3: { A: 'P', B: 'B', C: 'J', D: 'K' },
+                Q4: { A: 'P', B: 'G', C: 'L', D: 'G' },
+                Q5: { A: 'P', B: 'L', C: 'J', D: 'K' }
+            },
+            pairRules: [
+                ['P', 'B', 'G'], ['L', 'J', 'J'], ['K', 'L', 'K'], ['K', 'P', 'K'],
+                ['B', 'L', 'B'], ['P', 'J', 'P'], ['K', 'J', 'K'], ['G', 'P', 'G'], ['G', 'B', 'G']
+            ],
+            q5TieBreak: { A: 'P', B: 'L', C: 'J', D: 'K' }
+        };
+
+        const questions = [
+            {
+                q: 'How did you deal with chaos this year?',
+                opts: [
+                    { key: 'A', text: 'I turned into Buddha with Wi-Fi. 🧘‍♂️' },
+                    { key: 'B', text: 'Fed people biryani till they calmed down. 🍛' },
+                    { key: 'C', text: 'Laughed… then cried… then laughed again. 😂🥲' },
+                    { key: 'D', text: 'I didn\'t deal, I managed — then jumped over it. 🧠' }
+                ]
+            },
+            {
+                q: 'How often did you actually take a break this year?',
+                opts: [
+                    { key: 'A', text: 'Break? Like… emotional or screen time? 😅' },
+                    { key: 'B', text: 'Once, when Wi-Fi went off for 2 hours. ⚡' },
+                    { key: 'C', text: 'Every weekend… mentally, not physically. 😌' },
+                    { key: 'D', text: 'Every day — because I work smart, not hard. 💼' }
+                ]
+            },
+            {
+                q: 'Which line sums up your 2025 vibe?',
+                opts: [
+                    { key: 'A', text: 'I survived. That\'s the caption. 😶' },
+                    { key: 'B', text: 'Still feeding people, still healing myself. 🍲' },
+                    { key: 'C', text: 'Life\'s a mess, but it\'s my kinda mess. 💃' },
+                    { key: 'D', text: 'Error 404: Life not found. 🧳' }
+                ]
+            },
+            {
+                q: 'What did you secretly crave the most this year?',
+                opts: [
+                    { key: 'A', text: 'Silence, peace, less notifications. 🔕' },
+                    { key: 'B', text: 'Someone who says, I got you. ❤️' },
+                    { key: 'C', text: 'More laughter, less drama. 😂' },
+                    { key: 'D', text: 'A break that doesn\'t involve guilt. 💤' }
+                ]
+            },
+            {
+                q: 'How do you hype yourself up when life drags you down?',
+                opts: [
+                    { key: 'A', text: 'It\'s okay, slow progress still counts. 🌙' },
+                    { key: 'B', text: 'Eat, sleep, repeat confidence. 🍛' },
+                    { key: 'C', text: 'Make a meme out of it, obviously. 🤳' },
+                    { key: 'D', text: 'Stand up, fix hair, and pretend I\'ve got it together. 😎' }
+                ]
+            }
+        ];
+
+        // Realistic firecracker fizz sound using white noise
+        function playRealisticFizz(intensity = 1) {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const bufferSize = audioContext.sampleRate * (0.3 + intensity * 0.4);
+                const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+                const data = buffer.getChannelData(0);
+                
+                // Generate white noise
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = (Math.random() * 2 - 1) * 0.3 * intensity;
+                }
+                
+                const source = audioContext.createBufferSource();
+                source.buffer = buffer;
+                
+                const filter = audioContext.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.value = 2000 + (intensity * 2000);
+                filter.Q.value = 1;
+                
+                const gainNode = audioContext.createGain();
+                const volume = 0.2 * intensity;
+                gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + (0.3 + intensity * 0.4));
+                
+                source.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                source.start();
+                source.stop(audioContext.currentTime + (0.3 + intensity * 0.4));
+                console.log('Fizz sound played, intensity:', intensity);
+            } catch (error) {
+                console.error('Fizz sound error:', error);
+            }
+        }
+
+        // Realistic blast sound
+        function playRealisticBlast() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Create main explosion with noise
+                const bufferSize = audioContext.sampleRate * 1.2;
+                const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+                const data = buffer.getChannelData(0);
+                
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = (Math.random() * 2 - 1) * Math.exp(-i / bufferSize * 3);
+                }
+                
+                const source = audioContext.createBufferSource();
+                source.buffer = buffer;
+                
+                const filter = audioContext.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 800;
+                
+                const gainNode = audioContext.createGain();
+                gainNode.gain.setValueAtTime(0.6, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.2);
+                
+                source.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                source.start();
+                
+                // Add crack sound
+                const osc = audioContext.createOscillator();
+                const oscGain = audioContext.createGain();
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(3000, audioContext.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.1);
+                oscGain.gain.setValueAtTime(0.4, audioContext.currentTime);
+                oscGain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+                osc.connect(oscGain);
+                oscGain.connect(audioContext.destination);
+                osc.start();
+                osc.stop(audioContext.currentTime + 0.15);
+                console.log('Blast sound played');
+            } catch (error) {
+                console.error('Blast sound error:', error);
+            }
+        }
+
+        function createRealisticSparkles() {
+            const colors = ['#FFD700', '#FFA500', '#FF6347', '#FF1493', '#4169E1', '#32CD32'];
+            const stars = ['⭐', '✨', '💫', '🌟'];
+            
+            // Shoot sparkle lines in all directions
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const angle = (Math.PI * 2 * i) / 30;
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = '50%';
+                    sparkle.style.top = '50%';
+                    
+                    const line = document.createElement('div');
+                    line.className = 'sparkle-line';
+                    line.style.background = `linear-gradient(90deg, ${colors[i % colors.length]}, transparent)`;
+                    line.style.transform = `rotate(${angle}rad)`;
+                    line.style.setProperty('--tx', `${Math.cos(angle) * 300}px`);
+                    line.style.setProperty('--ty', `${Math.sin(angle) * 300}px`);
+                    line.style.animation = 'sparkle-shoot 1s ease-out forwards';
+                    
+                    sparkle.appendChild(line);
+                    document.body.appendChild(sparkle);
+                    
+                    setTimeout(() => sparkle.remove(), 1000);
+                }, i * 20);
+            }
+            
+            // Add star sparkles
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const star = document.createElement('div');
+                    star.className = 'star-sparkle';
+                    star.textContent = stars[Math.floor(Math.random() * stars.length)];
+                    star.style.left = '50%';
+                    star.style.top = '50%';
+                    star.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 200 + Math.random() * 200;
+                    star.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
+                    star.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
+                    star.style.animation = 'star-float 1.5s ease-out forwards';
+                    document.body.appendChild(star);
+                    
+                    setTimeout(() => star.remove(), 1500);
+                }, i * 50);
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#FFD93D', '#6BCF7F'];
+            
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * window.innerWidth + 'px';
+                    confetti.style.top = '-10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animation = `confetti-fall ${Math.random() * 2 + 2.5}s ease-out forwards`;
+                    confetti.style.animationDelay = Math.random() * 0.2 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 4500);
+                }, i * 12);
+            }
+        }
+
+        function validateName(name) {
+            try {
+                const isValid = /^[A-Za-z .-]{2,30}$/.test(name.trim());
+                console.log('Name validation:', name, '→', isValid);
+                return isValid;
+            } catch (error) {
+                console.error('Validation error:', error);
+                return false;
+            }
+        }
+
+        function handleStart() {
+            try {
+                userName = document.getElementById('nameInput').value.trim();
+                const errorDiv = document.getElementById('nameError');
+                
+                if (!validateName(userName)) {
+                    errorDiv.textContent = 'Please enter your name to begin.';
+                    errorDiv.classList.remove('hidden');
+                    document.getElementById('nameInput').classList.add('error');
+                    return;
+                }
+                
+                console.log('Starting game for:', userName);
+                playRealisticFizz(1);
+                showDisclaimer();
+            } catch (error) {
+                console.error('Start error:', error);
+                alert('Something went wrong. Please refresh and try again.');
+            }
+        }
+
+        function showDisclaimer() {
+            const disclaimer = document.getElementById('disclaimer');
+            disclaimer.classList.remove('hidden');
+            
+            setTimeout(() => {
+                disclaimer.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                disclaimer.classList.remove('show');
+                disclaimer.classList.add('hide');
+                
+                setTimeout(() => {
+                    disclaimer.classList.add('hidden');
+                    disclaimer.classList.remove('hide');
+                    startQuestions();
+                }, 300);
+            }, 2000);
+        }
+
+        function startQuestions() {
+            currentQuestion = 0;
+            answers = {};
+            showQuestion();
+            showScreen('questions');
+        }
+
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            // Calculate progress based on completed answers, not current question
+            // Max 90% before final answer to not pass the cracker
+            const progress = (currentQuestion / 5) * 90;
+            
+            document.getElementById('questionSpark').style.left = progress + '%';
+            document.getElementById('questionCounter').textContent = `Question ${currentQuestion + 1} of 5`;
+            document.getElementById('questionText').textContent = q.q;
+            
+            const backBtn = document.getElementById('backBtn');
+            backBtn.style.display = currentQuestion > 0 ? 'block' : 'none';
+            
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            q.opts.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt.text;
+                btn.onclick = () => handleAnswer(opt.key);
+                container.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(key) {
+            answers[currentQuestion + 1] = key;
+            
+            const intensity = ((currentQuestion + 1) / 5) * 2.5;
+            playRealisticFizz(intensity);
+            
+            if (currentQuestion < 4) {
+                currentQuestion++;
+                setTimeout(showQuestion, 400);
+            } else {
+                // Move fire to 100% to reach the cracker
+                document.getElementById('questionSpark').style.left = '100%';
+                setTimeout(() => {
+                    showBlastAndResult();
+                }, 600);
+            }
+        }
+
+        function showBlastAndResult() {
+            const blastEl = document.getElementById('blast');
+            blastEl.classList.remove('hidden');
+            
+            playRealisticBlast();
+            createRealisticSparkles();
+            createConfetti();
+            
+            setTimeout(() => {
+                calculateResult();
+                showResult();
+                blastEl.classList.add('hidden');
+                showScreen('result');
+            }, 2000);
+        }
+
+        function goBackQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                delete answers[currentQuestion + 2];
+                showQuestion();
+            }
+        }
+
+        function calculateResult() {
+            try {
+                const scores = { P: 0, B: 0, L: 0, K: 0, J: 0, G: 0 };
+                
+                for (let i = 1; i <= 5; i++) {
+                    const code = config.map[`Q${i}`][answers[i]];
+                    scores[code] += config.weights[`Q${i}`];
+                }
+                
+                console.log('Scores:', scores);
+                
+                const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+                let sweetCode = ranked[0][0];
+                const topScore = ranked[0][1];
+                const secScore = ranked[1][1];
+                
+                if (topScore - secScore <= 1) {
+                    const topKey = ranked[0][0];
+                    const secKey = ranked[1][0];
+                    
+                    for (const [a, b, w] of config.pairRules) {
+                        const set = new Set([topKey, secKey]);
+                        if (set.has(a) && set.has(b)) {
+                            sweetCode = w;
+                            break;
+                        }
+                    }
+                    
+                    if (topScore === secScore && config.q5TieBreak[answers[5]]) {
+                        sweetCode = config.q5TieBreak[answers[5]];
+                    }
+                }
+                
+                const sweet = config.sweets[sweetCode];
+                const lines = buildCustomLines(answers);
+                resultData = { sweet, lines };
+                
+                console.log('Result:', sweetCode, sweet.name);
+            } catch (error) {
+                console.error('Calculate result error:', error);
+                // Fallback to a default sweet
+                resultData = { 
+                    sweet: config.sweets.L, 
+                    lines: ['You completed the journey!', 'Your positivity shines through.'] 
+                };
+            }
+        }
+
+        function buildCustomLines(ans) {
+            const picks = [];
+            if (ans[1] === 'A') picks.push('You kept calm when things got loud — that\'s rare.');
+            if (ans[1] === 'D') picks.push('You didn\'t just cope — you managed and moved.');
+            if (ans[3] === 'C') picks.push('You turned mess into momentum (and a few laughs).');
+            if (ans[3] === 'B') picks.push('You kept people fed and feelings safe.');
+            if (ans[4] === 'A') picks.push('Your heart wants quiet — and it\'s allowed.');
+            if (ans[4] === 'B') picks.push('You craved real support — that\'s honest.');
+            if (ans[2] === 'D') picks.push('You protected your energy like a pro.');
+            if (ans[2] === 'A') picks.push('You ran on low battery but still showed up.');
+            if (ans[5] === 'C') picks.push('Humour was your survival kit — and it worked.');
+            if (ans[5] === 'A') picks.push('You chose patience over panic — powerful.');
+            return picks.slice(0, 2);
+        }
+
+        function showResult() {
+            document.getElementById('userName').textContent = userName;
+            
+            // Load sweet image with better error handling
+            const sweetImg = document.getElementById('sweetImage');
+            const sweetKey = Object.keys(sweetImages).find(key => 
+                config.sweets[Object.keys(config.sweets).find(k => config.sweets[k].name === resultData.sweet.name)]
+            );
+            
+            // Find the sweet code
+            let sweetCode = '';
+            for (let code in config.sweets) {
+                if (config.sweets[code].name === resultData.sweet.name) {
+                    sweetCode = code;
+                    break;
+                }
+            }
+            
+            const imageMap = {
+                'P': sweetImages.pootharekulu,
+                'B': sweetImages.bobbatlu,
+                'L': sweetImages.laddu,
+                'K': sweetImages.kaja,
+                'J': sweetImages.jalebi,
+                'G': sweetImages.gulab
+            };
+            
+            const emojiMap = {
+                'P': sweetEmojis.pootharekulu,
+                'B': sweetEmojis.bobbatlu,
+                'L': sweetEmojis.laddu,
+                'K': sweetEmojis.kaja,
+                'J': sweetEmojis.jalebi,
+                'G': sweetEmojis.gulab
+            };
+            
+            sweetImg.onerror = function() {
+                console.error('Failed to load sweet image, using emoji fallback');
+                sweetImg.style.display = 'none';
+                const fallback = document.createElement('div');
+                fallback.id = 'sweetEmojiFallback';
+                fallback.style.fontSize = '140px';
+                fallback.style.margin = '20px auto';
+                fallback.textContent = emojiMap[sweetCode] || '🍬';
+                const existingFallback = document.getElementById('sweetEmojiFallback');
+                if (existingFallback) existingFallback.remove();
+                sweetImg.parentElement.insertBefore(fallback, sweetImg.nextSibling);
+            };
+            
+            sweetImg.onload = function() {
+                console.log('✅ Sweet image loaded successfully');
+                const fallback = document.getElementById('sweetEmojiFallback');
+                if (fallback) fallback.remove();
+                sweetImg.style.display = 'block';
+            };
+            
+            // Set crossOrigin for CORS
+            sweetImg.crossOrigin = 'anonymous';
+            sweetImg.src = imageMap[sweetCode];
+            
+            document.getElementById('resultSweet').textContent = `You're a ${resultData.sweet.name}!`;
+            document.getElementById('resultTitle').textContent = resultData.sweet.title;
+            document.getElementById('resultMessage').textContent = resultData.sweet.msg;
+            
+            const linesDiv = document.getElementById('customLines');
+            linesDiv.innerHTML = '';
+            resultData.lines.forEach(line => {
+                const p = document.createElement('p');
+                p.className = 'custom-line';
+                p.textContent = line;
+                linesDiv.appendChild(p);
+            });
+        }
+
+        function showScreen(screen) {
+            ['landing', 'questions', 'result'].forEach(s => {
+                document.getElementById(s).classList.add('hidden');
+            });
+            document.getElementById(screen).classList.remove('hidden');
+        }
+
+        function retakeQuiz() {
+            currentQuestion = 0;
+            answers = {};
+            showScreen('landing');
+        }
+
+        async function downloadCard() {
+            try {
+                const card = document.getElementById('downloadCard');
+                
+                // Wait for images to load
+                const images = card.getElementsByTagName('img');
+                await Promise.all(Array.from(images).map(img => {
+                    if (img.complete) return Promise.resolve();
+                    return new Promise((resolve, reject) => {
+                        img.onload = resolve;
+                        img.onerror = reject;
+                        setTimeout(() => resolve(), 3000); // Timeout after 3s
+                    });
+                }));
+                
+                const canvas = await html2canvas(card, {
+                    scale: 2,
+                    backgroundColor: '#ffffff',
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: false
+                });
+                
+                const link = document.createElement('a');
+                const filename = `Diwali-${userName}-${resultData.sweet.name}.png`.replace(/\s+/g, '-');
+                link.download = filename;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                console.log('Card downloaded successfully:', filename);
+            } catch (error) {
+                console.error('Download failed:', error);
+                alert('Download failed. Please try again or take a screenshot of your result card.');
+            }
+        }
+
+        async function shareCard() {
+            try {
+                const shareText = `🎇 I discovered my Diwali sweet personality - I'm a ${resultData.sweet.name}! ${resultData.sweet.title} ✨\n\nWhat's yours? Light your inner cracker and find out! 🪔`;
+                const shareUrl = window.location.href;
+                
+                // Generate card image
+                const card = document.getElementById('downloadCard');
+                
+                // Wait for all images to load
+                const images = card.getElementsByTagName('img');
+                await Promise.all(Array.from(images).map(img => {
+                    if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
+                    return new Promise((resolve) => {
+                        img.onload = resolve;
+                        img.onerror = resolve; // Continue even if image fails
+                        setTimeout(resolve, 2000); // Timeout after 2s
+                    });
+                }));
+                
+                // Try to share with Web Share API including image
+                if (navigator.share && navigator.canShare) {
+                    try {
+                        const canvas = await html2canvas(card, {
+                            scale: 2,
+                            backgroundColor: '#ffffff',
+                            useCORS: true,
+                            allowTaint: true,
+                            logging: false
+                        });
+                        
+                        // Convert canvas to blob
+                        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                        const file = new File([blob], `Diwali-${userName}-${resultData.sweet.name}.png`.replace(/\s+/g, '-'), { 
+                            type: 'image/png' 
+                        });
+                        
+                        const shareData = {
+                            title: 'My Diwali Sweet Personality 🎇',
+                            text: shareText,
+                            files: [file]
+                        };
+                        
+                        // Check if we can share files
+                        if (navigator.canShare(shareData)) {
+                            await navigator.share(shareData);
+                            console.log('✅ Shared successfully with image');
+                            return;
+                        }
+                    } catch (shareErr) {
+                        console.log('Image share not supported, trying text share:', shareErr.message);
+                    }
+                    
+                    // Fallback to text-only share
+                    try {
+                        await navigator.share({
+                            title: 'My Diwali Sweet Personality 🎇',
+                            text: shareText,
+                            url: shareUrl
+                        });
+                        console.log('✅ Shared successfully (text only)');
+                        return;
+                    } catch (textShareErr) {
+                        if (textShareErr.name === 'AbortError') {
+                            console.log('Share cancelled by user');
+                            return;
+                        }
+                    }
+                }
+                
+                // Fallback: Show share options with download
+                showShareOptionsWithImage(shareText, shareUrl);
+                
+            } catch (error) {
+                console.error('Share error:', error);
+                const fallbackText = `🎇 I discovered my Diwali sweet personality - I'm a ${resultData.sweet.name}! ${resultData.sweet.title} ✨\n\nWhat's yours? Light your inner cracker and find out! 🪔`;
+                const fallbackUrl = window.location.href;
+                showShareOptionsWithImage(fallbackText, fallbackUrl);
+            }
+        }
+        
+        async function showShareOptionsWithImage(text, url) {
+            const encodedText = encodeURIComponent(text + '\n\n' + url);
+            
+            // WhatsApp
+            const whatsapp = `https://api.whatsapp.com/send?text=${encodedText}`;
+            
+            // Create modal for share options
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                padding: 20px;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 32px; max-width: 400px; text-align: center;">
+                    <h3 style="color: #32509F; margin-bottom: 20px; font-size: 22px;">Share Your Result! 🎉</h3>
+                    <p style="color: #6B7280; margin-bottom: 24px; font-size: 15px;">
+                        First, download your card. Then share it with your message!
+                    </p>
+                    <button onclick="downloadCardAndContinue()" style="
+                        background: #F77F00;
+                        color: white;
+                        border: none;
+                        padding: 14px 28px;
+                        border-radius: 12px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        width: 100%;
+                        margin-bottom: 12px;
+                    ">📥 Download Card First</button>
+                    <button onclick="window.open('${whatsapp}', '_blank')" style="
+                        background: #25D366;
+                        color: white;
+                        border: none;
+                        padding: 14px 28px;
+                        border-radius: 12px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        width: 100%;
+                        margin-bottom: 12px;
+                    ">📱 Share on WhatsApp</button>
+                    <button onclick="copyShareText('${text.replace(/'/g, "\\'")}', '${url}')" style="
+                        background: white;
+                        color: #32509F;
+                        border: 2px solid #32509F;
+                        padding: 14px 28px;
+                        border-radius: 12px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        width: 100%;
+                        margin-bottom: 12px;
+                    ">📋 Copy Message</button>
+                    <button onclick="this.closest('div[style*=fixed]').remove()" style="
+                        background: transparent;
+                        color: #6B7280;
+                        border: none;
+                        padding: 12px;
+                        font-size: 14px;
+                        cursor: pointer;
+                        width: 100%;
+                    ">Cancel</button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Click outside to close
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        async function downloadCardAndContinue() {
+            await downloadCard();
+            alert('✅ Card downloaded! Now you can share it along with your message.');
+        }
+        
+        function copyShareText(text, url) {
+            const fullText = text + '\n\n' + url;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(fullText).then(() => {
+                    alert('✅ Message copied! Now paste it when sharing your downloaded card.');
+                    document.querySelector('div[style*=fixed]').remove();
+                }).catch(() => {
+                    prompt('Copy this message:', fullText);
+                    document.querySelector('div[style*=fixed]').remove();
+                });
+            } else {
+                prompt('Copy this message:', fullText);
+                document.querySelector('div[style*=fixed]').remove();
+            }
+        }
+
+        document.getElementById('nameInput').addEventListener('input', function() {
+            const btn = document.getElementById('startBtn');
+            btn.disabled = this.value.trim().length < 2;
+            document.getElementById('nameError').classList.add('hidden');
+            this.classList.remove('error');
+        });
+
+        document.getElementById('nameInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && this.value.trim().length >= 2) {
+                handleStart();
+            }
+        });
+
+        // Check if html2canvas is loaded
+        window.addEventListener('load', function() {
+            if (typeof html2canvas === 'undefined') {
+                console.error('⚠️ html2canvas library not loaded! Download feature will not work.');
+                console.log('Make sure you have internet connection or host html2canvas locally.');
+            } else {
+                console.log('✅ html2canvas loaded successfully');
+            }
+            console.log('✅ All systems ready!');
+        });
+    </script>
+</body>
+</html>
