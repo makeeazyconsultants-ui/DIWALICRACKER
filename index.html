@@ -1552,7 +1552,7 @@
                     <div style="font-size: 72px; margin-bottom: 16px;">🎁</div>
                     <h3 style="color: #32509F; margin-bottom: 12px; font-size: ${isMobile ? '26px' : '30px'}; font-weight: bold;">Share Your Gift!</h3>
                     <p style="color: #6B7280; margin-bottom: 24px; font-size: ${isMobile ? '16px' : '18px'}; line-height: 1.6;">
-                        Choose how you'd like to share your Diwali card:
+                        Choose how you'd like to share:
                     </p>
                     
                     <button id="shareWhatsApp" style="
@@ -1572,8 +1572,8 @@
                         <span style="font-size: 28px; vertical-align: middle;">📱</span> Share on WhatsApp
                     </button>
                     
-                    <button id="shareInstagram" style="
-                        background: linear-gradient(135deg, #E1306C 0%, #C13584 50%, #833AB4 100%);
+                    <button id="shareOther" style="
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                         color: white;
                         border: none;
                         padding: ${isMobile ? '18px 28px' : '20px 32px'};
@@ -1583,26 +1583,10 @@
                         cursor: pointer;
                         width: 100%;
                         margin-bottom: 14px;
-                        box-shadow: 0 4px 12px rgba(225, 48, 108, 0.4);
+                        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
                         transition: all 0.3s;
                     " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                        <span style="font-size: 28px; vertical-align: middle;">📸</span> Share on Instagram
-                    </button>
-                    
-                    <button id="copyToClipboard" style="
-                        background: white;
-                        color: #32509F;
-                        border: 2px solid #32509F;
-                        padding: ${isMobile ? '16px 24px' : '18px 28px'};
-                        border-radius: 14px;
-                        font-size: ${isMobile ? '17px' : '19px'};
-                        font-weight: 600;
-                        cursor: pointer;
-                        width: 100%;
-                        margin-bottom: 14px;
-                        transition: all 0.3s;
-                    " onmouseover="this.style.background='#DDE6FF'" onmouseout="this.style.background='white'">
-                        📋 Copy Message
+                        <span style="font-size: 28px; vertical-align: middle;">📤</span> Share on Other Apps
                     </button>
                     
                     <button onclick="this.closest('div[style*=fixed]').remove();" style="
@@ -1627,14 +1611,9 @@
                 shareToWhatsApp(shareText);
             };
             
-            document.getElementById('shareInstagram').onclick = () => {
+            document.getElementById('shareOther').onclick = () => {
                 modal.remove();
-                shareToInstagram(shareText);
-            };
-            
-            document.getElementById('copyToClipboard').onclick = () => {
-                copyToClipboard(shareText);
-                modal.remove();
+                shareToOtherApps(shareText);
             };
             
             modal.addEventListener('click', (e) => {
@@ -1673,38 +1652,25 @@
             }, 500);
         }
 
-        async function shareToInstagram(text) {
-            // Instagram doesn't support URL sharing
-            // Download card + Copy text + Show instructions
+        async function shareToOtherApps(text) {
+            // Download the card
             downloadCardFromBlob();
             
             // Copy text to clipboard
             try {
                 await navigator.clipboard.writeText(text);
+                console.log('✅ Text copied to clipboard');
             } catch (e) {
                 console.error('Clipboard error:', e);
             }
             
-            // Show Instagram instructions
+            // Show success message
             setTimeout(() => {
-                showInstagramGuide();
+                showOtherAppsGuide();
             }, 500);
         }
 
-        function downloadCardFromBlob() {
-            if (!cardImageBlob) {
-                console.error('No card image blob available');
-                return;
-            }
-            
-            const link = document.createElement('a');
-            link.download = `Diwali-${userName}-${resultData.sweet.name}.png`.replace(/\s+/g, '-');
-            link.href = URL.createObjectURL(cardImageBlob);
-            link.click();
-            URL.revokeObjectURL(link.href);
-        }
-
-        function showInstagramGuide() {
+        function showOtherAppsGuide() {
             const modal = document.createElement('div');
             modal.style.cssText = `
                 position: fixed;
@@ -1725,23 +1691,26 @@
             
             modal.innerHTML = `
                 <div style="background: white; border-radius: 24px; padding: ${isMobile ? '32px 24px' : '40px'}; max-width: 450px; width: 100%; text-align: center; animation: slideUp 0.3s;">
-                    <div style="font-size: 80px; margin-bottom: 16px;">📸</div>
-                    <h3 style="color: #E1306C; margin-bottom: 16px; font-size: ${isMobile ? '26px' : '30px'}; font-weight: bold;">Share on Instagram</h3>
-                    <p style="color: #10B981; margin-bottom: 20px; font-size: ${isMobile ? '17px' : '19px'}; font-weight: 600;">
-                        ✅ Card Downloaded<br>
-                        ✅ Message Copied
-                    </p>
-                    <div style="background: #FEF3F2; border-left: 4px solid #E1306C; padding: 20px; border-radius: 12px; margin-bottom: 24px; text-align: left;">
+                    <div style="font-size: 80px; margin-bottom: 16px;">✅</div>
+                    <h3 style="color: #10B981; margin-bottom: 16px; font-size: ${isMobile ? '26px' : '30px'}; font-weight: bold;">Ready to Share!</h3>
+                    <div style="background: #F0FDF4; border: 2px solid #10B981; padding: 24px; border-radius: 16px; margin-bottom: 24px;">
+                        <p style="color: #065F46; font-size: ${isMobile ? '18px' : '20px'}; font-weight: 600; line-height: 1.8; margin: 0;">
+                            ✅ Image downloaded<br>
+                            ✅ Text copied
+                        </p>
+                    </div>
+                    <div style="background: #EFF6FF; border-left: 4px solid #667eea; padding: 20px; border-radius: 12px; margin-bottom: 24px; text-align: left;">
                         <p style="color: #374151; font-size: ${isMobile ? '16px' : '17px'}; line-height: 1.8; margin: 0;">
-                            <strong style="color: #E1306C; display: block; margin-bottom: 12px;">📱 How to share:</strong>
-                            1️⃣ Open Instagram app<br>
-                            2️⃣ Create new Story or Post<br>
-                            3️⃣ Upload your card image<br>
-                            4️⃣ Paste the copied caption
+                            <strong style="color: #667eea; display: block; margin-bottom: 12px;">📱 How to share:</strong>
+                            1️⃣ Open your desired app<br>
+                            <span style="color: #6B7280; font-size: ${isMobile ? '14px' : '15px'};">(Instagram, Facebook, Twitter, etc.)</span><br><br>
+                            2️⃣ Create a new post<br><br>
+                            3️⃣ Upload the downloaded image<br><br>
+                            4️⃣ Paste the copied text as caption
                         </p>
                     </div>
                     <button onclick="this.closest('div[style*=fixed]').remove();" style="
-                        background: linear-gradient(135deg, #E1306C 0%, #C13584 50%, #833AB4 100%);
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                         color: white;
                         border: none;
                         padding: ${isMobile ? '18px 32px' : '20px 36px'};
@@ -1750,7 +1719,7 @@
                         font-weight: bold;
                         cursor: pointer;
                         width: 100%;
-                        box-shadow: 0 4px 12px rgba(225, 48, 108, 0.4);
+                        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
                     ">
                         Got it! 👍
                     </button>
@@ -1766,42 +1735,29 @@
             });
         }
 
+        async function shareToInstagram(text) {
+            // This function is no longer used
+        }
+
+        function showInstagramGuide() {
+            // This function is no longer used
+        }
+
         async function copyToClipboard(text) {
-            try {
-                await navigator.clipboard.writeText(text);
-                
-                // Show toast notification
-                const toast = document.createElement('div');
-                toast.style.cssText = `
-                    position: fixed;
-                    bottom: 30px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background: #10B981;
-                    color: white;
-                    padding: 18px 32px;
-                    border-radius: 12px;
-                    font-size: 17px;
-                    font-weight: 600;
-                    z-index: 10002;
-                    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
-                    animation: slideUp 0.3s;
-                `;
-                toast.textContent = '✅ Message copied to clipboard!';
-                document.body.appendChild(toast);
-                
-                setTimeout(() => {
-                    toast.style.animation = 'fadeOut 0.3s';
-                    setTimeout(() => toast.remove(), 300);
-                }, 2500);
-                
-                // Also download the card
-                downloadCardFromBlob();
-                
-            } catch (error) {
-                console.error('Clipboard error:', error);
-                alert('Message copied! Your card has also been downloaded.');
+            // This function is no longer used
+        }
+
+        function downloadCardFromBlob() {
+            if (!cardImageBlob) {
+                console.error('No card image blob available');
+                return;
             }
+            
+            const link = document.createElement('a');
+            link.download = `Diwali-${userName}-${resultData.sweet.name}.png`.replace(/\s+/g, '-');
+            link.href = URL.createObjectURL(cardImageBlob);
+            link.click();
+            URL.revokeObjectURL(link.href);
         }
 
         // Input validation
