@@ -5,7 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#DDE6FF">
     <title>Light the Cracker Within - Diwali 2024</title>
+    
+    <!-- Preload critical images -->
+    <link rel="preload" as="image" href="https://framerusercontent.com/images/otpXuKdG3uW4Up8ICaqstwvlg4o.png?scale-down-to=512">
+    <link rel="preload" as="image" href="https://i.imgur.com/tFONffe.png">
+    <link rel="preload" as="image" href="https://i.imgur.com/NfuocXK.png">
+    <link rel="preload" as="image" href="https://i.imgur.com/kAOYFVM.png">
+    <link rel="preload" as="image" href="https://i.imgur.com/xA3gnAQ.png">
+    <link rel="preload" as="image" href="https://i.imgur.com/NY5QUQs.png">
+    <link rel="preload" as="image" href="https://i.imgur.com/hIuZMOj.png">
+    
     <style>
         * {
             margin: 0;
@@ -16,6 +28,7 @@
 
         html {
             font-size: 16px;
+            -webkit-text-size-adjust: 100%;
         }
 
         body {
@@ -73,6 +86,10 @@
             font-weight: bold;
             margin-bottom: 28px;
             line-height: 1.2;
+        }
+
+        h1.orange-title {
+            color: #F77F00;
         }
 
         h2 {
@@ -478,8 +495,7 @@
             display: none !important;
         }
 
-        /* Loading Overlay */
-        .loading-overlay {
+        .loading-spinner {
             position: fixed;
             top: 0;
             left: 0;
@@ -487,11 +503,25 @@
             bottom: 0;
             background: rgba(0, 0, 0, 0.7);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 10000;
             color: white;
-            font-size: 20px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #F77F00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* Mobile Responsive - Optimized for all devices */
@@ -672,6 +702,22 @@
             }
         }
 
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
         /* Preload images */
         .preload-images {
             position: absolute;
@@ -831,8 +877,8 @@
             <div class="logo" style="margin: 0 auto 12px;">
                 <img src="https://framerusercontent.com/images/otpXuKdG3uW4Up8ICaqstwvlg4o.png?scale-down-to=512" alt="Make Eazy" id="resultLogo">
             </div>
-            <h1 style="color: #32509F; font-size: 40px; margin: 12px 0 4px 0;">Light the Cracker Within!</h1>
-            <h1 style="color: #32509F; font-size: 36px; margin: 4px 0 12px 0;">Happy Diwali! 🎆</h1>
+            <h1 class="orange-title" style="font-size: 38px; margin: 8px 0 4px 0;">Light the Cracker Within!</h1>
+            <h1 style="font-size: 36px; margin: 4px 0 12px 0;">Happy Diwali! 🎆</h1>
             <h2 style="color: #F77F00; font-size: 36px; margin: 12px 0 20px 0;" id="userName"></h2>
             
             <img id="sweetImage" class="sweet-image" src="" alt="Sweet">
@@ -869,6 +915,7 @@
         let answers = {};
         let currentQuestion = 0;
         let resultData = null;
+        let cardImageBlob = null;
 
         const sweetImages = {
             jalebi: 'https://i.imgur.com/NY5QUQs.png',
@@ -883,6 +930,7 @@
         function preloadImages() {
             Object.values(sweetImages).forEach(src => {
                 const img = new Image();
+                img.crossOrigin = 'anonymous';
                 img.src = src;
             });
         }
@@ -1141,18 +1189,23 @@
         }
 
         function handleStart() {
-            userName = document.getElementById('nameInput').value.trim();
-            const errorDiv = document.getElementById('nameError');
-            
-            if (!validateName(userName)) {
-                errorDiv.textContent = 'Please enter your name to begin.';
-                errorDiv.classList.remove('hidden');
-                document.getElementById('nameInput').classList.add('error');
-                return;
+            try {
+                userName = document.getElementById('nameInput').value.trim();
+                const errorDiv = document.getElementById('nameError');
+                
+                if (!validateName(userName)) {
+                    errorDiv.textContent = 'Please enter your name to begin.';
+                    errorDiv.classList.remove('hidden');
+                    document.getElementById('nameInput').classList.add('error');
+                    return;
+                }
+                
+                playRealisticFizz(1);
+                showDisclaimer();
+            } catch (error) {
+                console.error('Start error:', error);
+                alert('Something went wrong. Please refresh the page and try again.');
             }
-            
-            playRealisticFizz(1);
-            showDisclaimer();
         }
 
         function showDisclaimer() {
@@ -1206,19 +1259,24 @@
         }
 
         function handleAnswer(key) {
-            answers[currentQuestion + 1] = key;
-            
-            const intensity = ((currentQuestion + 1) / 5) * 2.5;
-            playRealisticFizz(intensity);
-            
-            if (currentQuestion < 4) {
-                currentQuestion++;
-                setTimeout(showQuestion, 400);
-            } else {
-                document.getElementById('questionSpark').style.left = '100%';
-                setTimeout(() => {
-                    showBlastAndResult();
-                }, 600);
+            try {
+                answers[currentQuestion + 1] = key;
+                
+                const intensity = ((currentQuestion + 1) / 5) * 2.5;
+                playRealisticFizz(intensity);
+                
+                if (currentQuestion < 4) {
+                    currentQuestion++;
+                    setTimeout(showQuestion, 400);
+                } else {
+                    document.getElementById('questionSpark').style.left = '100%';
+                    setTimeout(() => {
+                        showBlastAndResult();
+                    }, 600);
+                }
+            } catch (error) {
+                console.error('Answer error:', error);
+                alert('Something went wrong. Please try again.');
             }
         }
 
@@ -1247,38 +1305,46 @@
         }
 
         function calculateResult() {
-            const scores = { P: 0, B: 0, L: 0, K: 0, J: 0, G: 0 };
-            
-            for (let i = 1; i <= 5; i++) {
-                const code = config.map[`Q${i}`][answers[i]];
-                scores[code] += config.weights[`Q${i}`];
-            }
-            
-            const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-            let sweetCode = ranked[0][0];
-            const topScore = ranked[0][1];
-            const secScore = ranked[1][1];
-            
-            if (topScore - secScore <= 1) {
-                const topKey = ranked[0][0];
-                const secKey = ranked[1][0];
+            try {
+                const scores = { P: 0, B: 0, L: 0, K: 0, J: 0, G: 0 };
                 
-                for (const [a, b, w] of config.pairRules) {
-                    const set = new Set([topKey, secKey]);
-                    if (set.has(a) && set.has(b)) {
-                        sweetCode = w;
-                        break;
+                for (let i = 1; i <= 5; i++) {
+                    const code = config.map[`Q${i}`][answers[i]];
+                    scores[code] += config.weights[`Q${i}`];
+                }
+                
+                const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+                let sweetCode = ranked[0][0];
+                const topScore = ranked[0][1];
+                const secScore = ranked[1][1];
+                
+                if (topScore - secScore <= 1) {
+                    const topKey = ranked[0][0];
+                    const secKey = ranked[1][0];
+                    
+                    for (const [a, b, w] of config.pairRules) {
+                        const set = new Set([topKey, secKey]);
+                        if (set.has(a) && set.has(b)) {
+                            sweetCode = w;
+                            break;
+                        }
+                    }
+                    
+                    if (topScore === secScore && config.q5TieBreak[answers[5]]) {
+                        sweetCode = config.q5TieBreak[answers[5]];
                     }
                 }
                 
-                if (topScore === secScore && config.q5TieBreak[answers[5]]) {
-                    sweetCode = config.q5TieBreak[answers[5]];
-                }
+                const sweet = config.sweets[sweetCode];
+                const lines = buildCustomLines(answers);
+                resultData = { sweet, lines };
+            } catch (error) {
+                console.error('Calculate result error:', error);
+                resultData = { 
+                    sweet: config.sweets.L, 
+                    lines: ['You completed the journey!', 'Your positivity shines through.'] 
+                };
             }
-            
-            const sweet = config.sweets[sweetCode];
-            const lines = buildCustomLines(answers);
-            resultData = { sweet, lines };
         }
 
         function buildCustomLines(ans) {
@@ -1303,9 +1369,12 @@
             sweetImg.crossOrigin = 'anonymous';
             sweetImg.src = resultData.sweet.image;
             
-            // Ensure image is loaded
             sweetImg.onload = function() {
-                console.log('Sweet image loaded successfully');
+                console.log('✅ Sweet image loaded successfully');
+            };
+            
+            sweetImg.onerror = function() {
+                console.error('❌ Failed to load sweet image');
             };
             
             document.getElementById('resultSweet').textContent = `You're a ${resultData.sweet.name}!`;
@@ -1332,12 +1401,33 @@
         function retakeQuiz() {
             currentQuestion = 0;
             answers = {};
+            cardImageBlob = null;
             document.getElementById('nameInput').value = '';
             showScreen('landing');
         }
 
+        function showLoading(message = 'Loading...') {
+            const loading = document.createElement('div');
+            loading.id = 'loadingSpinner';
+            loading.className = 'loading-spinner';
+            loading.innerHTML = `
+                <div class="spinner"></div>
+                <div style="font-size: 18px; font-weight: 600;">${message}</div>
+            `;
+            document.body.appendChild(loading);
+        }
+
+        function hideLoading() {
+            const loading = document.getElementById('loadingSpinner');
+            if (loading) {
+                loading.remove();
+            }
+        }
+
         async function downloadCard() {
             try {
+                showLoading('Generating your card...');
+                
                 const card = document.getElementById('downloadCard');
                 
                 // Wait for images to load
@@ -1361,37 +1451,84 @@
                     removeContainer: true
                 });
                 
+                // Convert to blob for sharing
+                cardImageBlob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1.0));
+                
+                // Also trigger download
                 const link = document.createElement('a');
                 const filename = `Diwali-${userName}-${resultData.sweet.name}.png`.replace(/\s+/g, '-');
                 link.download = filename;
                 link.href = canvas.toDataURL('image/png', 1.0);
                 link.click();
                 
-                console.log('Card downloaded successfully:', filename);
+                hideLoading();
+                console.log('✅ Card downloaded successfully:', filename);
+                return cardImageBlob;
             } catch (error) {
-                console.error('Download failed:', error);
+                console.error('❌ Download failed:', error);
+                hideLoading();
+                alert('Download failed. Please try again or take a screenshot.');
+                return null;
             }
         }
 
         async function shareThisGift() {
             try {
-                const shareText = `🎇 I have earned the title of "${resultData.sweet.name}" - ${resultData.sweet.title}! What about you? Light your cracker within this Diwali! 🪔\n\nVisit: https://makeeazy.in/diwali2025`;
+                // Generate card image first if not already generated
+                if (!cardImageBlob) {
+                    showLoading('Preparing your card...');
+                    cardImageBlob = await generateCardImage();
+                    hideLoading();
+                }
                 
-                // Download card first
-                await downloadCard();
+                if (!cardImageBlob) {
+                    alert('Failed to generate card. Please try downloading instead.');
+                    return;
+                }
                 
-                // Wait a moment for download to complete
-                setTimeout(() => {
-                    showShareModal(shareText);
-                }, 500);
+                // Show share options
+                showShareOptions();
                 
             } catch (error) {
-                console.error('Share error:', error);
-                showShareModal(`🎇 I have earned the title of "${resultData.sweet.name}" - ${resultData.sweet.title}! What about you? Light your cracker within this Diwali! 🪔\n\nVisit: https://makeeazy.in/diwali2025`);
+                console.error('❌ Share error:', error);
+                hideLoading();
+                alert('Something went wrong. Please try downloading your card instead.');
             }
         }
 
-        function showShareModal(shareText) {
+        async function generateCardImage() {
+            try {
+                const card = document.getElementById('downloadCard');
+                
+                // Wait for images to load
+                const images = card.getElementsByTagName('img');
+                await Promise.all(Array.from(images).map(img => {
+                    if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
+                    return new Promise((resolve) => {
+                        img.onload = resolve;
+                        img.onerror = resolve;
+                        setTimeout(resolve, 3000);
+                    });
+                }));
+                
+                const canvas = await html2canvas(card, {
+                    scale: 3,
+                    backgroundColor: '#ffffff',
+                    useCORS: true,
+                    allowTaint: false,
+                    logging: false
+                });
+                
+                return await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1.0));
+            } catch (error) {
+                console.error('❌ Generate image error:', error);
+                return null;
+            }
+        }
+
+        function showShareOptions() {
+            const shareText = `🎇 I have earned the title of "${resultData.sweet.name}" - ${resultData.sweet.title}! What about you? Light your cracker within this Diwali! 🪔\n\nVisit: https://makeeazy.in/diwali2025`;
+            
             const modal = document.createElement('div');
             modal.style.cssText = `
                 position: fixed;
@@ -1399,7 +1536,7 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: rgba(0,0,0,0.8);
+                background: rgba(0,0,0,0.85);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -1411,64 +1548,58 @@
             const isMobile = window.innerWidth <= 768;
             
             modal.innerHTML = `
-                <div style="background: white; border-radius: 24px; padding: ${isMobile ? '28px 24px' : '40px'}; max-width: 450px; width: 100%; text-align: center; animation: slideUp 0.3s; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
-                    <div style="font-size: 64px; margin-bottom: 16px;">🎁</div>
-                    <h3 style="color: #32509F; margin-bottom: 12px; font-size: ${isMobile ? '24px' : '28px'}; font-weight: bold;">Share Your Gift!</h3>
+                <div style="background: white; border-radius: 24px; padding: ${isMobile ? '32px 24px' : '40px'}; max-width: 450px; width: 100%; text-align: center; animation: slideUp 0.3s; box-shadow: 0 20px 60px rgba(0,0,0,0.4);">
+                    <div style="font-size: 72px; margin-bottom: 16px;">🎁</div>
+                    <h3 style="color: #32509F; margin-bottom: 12px; font-size: ${isMobile ? '26px' : '30px'}; font-weight: bold;">Share Your Gift!</h3>
                     <p style="color: #6B7280; margin-bottom: 24px; font-size: ${isMobile ? '16px' : '18px'}; line-height: 1.6;">
-                        Your card has been downloaded! 📥<br>Now share it with the message below:
+                        Choose how you'd like to share your Diwali card:
                     </p>
                     
-                    <div style="background: #F3F4F6; padding: 16px; border-radius: 12px; margin-bottom: 24px; text-align: left;">
-                        <p style="color: #374151; font-size: 14px; line-height: 1.6; margin: 0;">
-                            ${shareText.replace(/\n/g, '<br>')}
-                        </p>
-                    </div>
-                    
-                    <button onclick="shareToWhatsApp('${shareText.replace(/'/g, "\\'")}'); this.closest('div[style*=fixed]').remove();" style="
+                    <button id="shareWhatsApp" style="
                         background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
                         color: white;
                         border: none;
-                        padding: ${isMobile ? '16px 28px' : '18px 32px'};
+                        padding: ${isMobile ? '18px 28px' : '20px 32px'};
                         border-radius: 14px;
-                        font-size: ${isMobile ? '17px' : '19px'};
+                        font-size: ${isMobile ? '18px' : '20px'};
                         font-weight: bold;
                         cursor: pointer;
                         width: 100%;
-                        margin-bottom: 12px;
-                        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+                        margin-bottom: 14px;
+                        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
                         transition: all 0.3s;
                     " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                        <span style="font-size: 24px; vertical-align: middle;">📱</span> Share on WhatsApp
+                        <span style="font-size: 28px; vertical-align: middle;">📱</span> Share on WhatsApp
                     </button>
                     
-                    <button onclick="shareToInstagram('${shareText.replace(/'/g, "\\'")}'); this.closest('div[style*=fixed]').remove();" style="
+                    <button id="shareInstagram" style="
                         background: linear-gradient(135deg, #E1306C 0%, #C13584 50%, #833AB4 100%);
                         color: white;
                         border: none;
-                        padding: ${isMobile ? '16px 28px' : '18px 32px'};
+                        padding: ${isMobile ? '18px 28px' : '20px 32px'};
                         border-radius: 14px;
-                        font-size: ${isMobile ? '17px' : '19px'};
+                        font-size: ${isMobile ? '18px' : '20px'};
                         font-weight: bold;
                         cursor: pointer;
                         width: 100%;
-                        margin-bottom: 12px;
-                        box-shadow: 0 4px 12px rgba(225, 48, 108, 0.3);
+                        margin-bottom: 14px;
+                        box-shadow: 0 4px 12px rgba(225, 48, 108, 0.4);
                         transition: all 0.3s;
                     " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                        <span style="font-size: 24px; vertical-align: middle;">📸</span> Share on Instagram
+                        <span style="font-size: 28px; vertical-align: middle;">📸</span> Share on Instagram
                     </button>
                     
-                    <button onclick="copyMessageAndClose('${shareText.replace(/'/g, "\\'")}'); this.closest('div[style*=fixed]').remove();" style="
+                    <button id="copyToClipboard" style="
                         background: white;
                         color: #32509F;
                         border: 2px solid #32509F;
-                        padding: ${isMobile ? '14px 24px' : '16px 28px'};
+                        padding: ${isMobile ? '16px 24px' : '18px 28px'};
                         border-radius: 14px;
-                        font-size: ${isMobile ? '16px' : '18px'};
+                        font-size: ${isMobile ? '17px' : '19px'};
                         font-weight: 600;
                         cursor: pointer;
                         width: 100%;
-                        margin-bottom: 12px;
+                        margin-bottom: 14px;
                         transition: all 0.3s;
                     " onmouseover="this.style.background='#DDE6FF'" onmouseout="this.style.background='white'">
                         📋 Copy Message
@@ -1479,7 +1610,7 @@
                         color: #9CA3AF;
                         border: none;
                         padding: 12px;
-                        font-size: 15px;
+                        font-size: 16px;
                         cursor: pointer;
                         width: 100%;
                     ">
@@ -1490,6 +1621,22 @@
             
             document.body.appendChild(modal);
             
+            // Add event listeners
+            document.getElementById('shareWhatsApp').onclick = () => {
+                modal.remove();
+                shareToWhatsApp(shareText);
+            };
+            
+            document.getElementById('shareInstagram').onclick = () => {
+                modal.remove();
+                shareToInstagram(shareText);
+            };
+            
+            document.getElementById('copyToClipboard').onclick = () => {
+                copyToClipboard(shareText);
+                modal.remove();
+            };
+            
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     modal.remove();
@@ -1497,26 +1644,67 @@
             });
         }
 
-        function shareToWhatsApp(text) {
-            const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
-            window.open(whatsappUrl, '_blank');
-        }
-
-        function shareToInstagram(text) {
-            // Instagram doesn't support direct text sharing via URL
-            // Copy text and show instructions
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(text).then(() => {
-                    showInstagramInstructions();
-                }).catch(() => {
-                    showInstagramInstructions();
-                });
-            } else {
-                showInstagramInstructions();
+        async function shareToWhatsApp(text) {
+            try {
+                // Try Web Share API first (works on mobile with files)
+                if (navigator.share && navigator.canShare) {
+                    const file = new File([cardImageBlob], `Diwali-${userName}.png`, { type: 'image/png' });
+                    const shareData = {
+                        title: 'My Diwali Result',
+                        text: text,
+                        files: [file]
+                    };
+                    
+                    if (navigator.canShare(shareData)) {
+                        await navigator.share(shareData);
+                        console.log('✅ Shared successfully with image');
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.log('Web Share API failed, using fallback:', error);
             }
+            
+            // Fallback: Download card + Open WhatsApp with text
+            downloadCardFromBlob();
+            setTimeout(() => {
+                const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+                window.open(whatsappUrl, '_blank');
+            }, 500);
         }
 
-        function showInstagramInstructions() {
+        async function shareToInstagram(text) {
+            // Instagram doesn't support URL sharing
+            // Download card + Copy text + Show instructions
+            downloadCardFromBlob();
+            
+            // Copy text to clipboard
+            try {
+                await navigator.clipboard.writeText(text);
+            } catch (e) {
+                console.error('Clipboard error:', e);
+            }
+            
+            // Show Instagram instructions
+            setTimeout(() => {
+                showInstagramGuide();
+            }, 500);
+        }
+
+        function downloadCardFromBlob() {
+            if (!cardImageBlob) {
+                console.error('No card image blob available');
+                return;
+            }
+            
+            const link = document.createElement('a');
+            link.download = `Diwali-${userName}-${resultData.sweet.name}.png`.replace(/\s+/g, '-');
+            link.href = URL.createObjectURL(cardImageBlob);
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+
+        function showInstagramGuide() {
             const modal = document.createElement('div');
             modal.style.cssText = `
                 position: fixed;
@@ -1524,7 +1712,7 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: rgba(0,0,0,0.8);
+                background: rgba(0,0,0,0.85);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -1536,33 +1724,33 @@
             const isMobile = window.innerWidth <= 768;
             
             modal.innerHTML = `
-                <div style="background: white; border-radius: 24px; padding: ${isMobile ? '28px 24px' : '40px'}; max-width: 450px; width: 100%; text-align: center; animation: slideUp 0.3s;">
-                    <div style="font-size: 72px; margin-bottom: 16px;">📸</div>
-                    <h3 style="color: #E1306C; margin-bottom: 16px; font-size: ${isMobile ? '24px' : '28px'}; font-weight: bold;">Share on Instagram</h3>
-                    <p style="color: #6B7280; margin-bottom: 20px; font-size: ${isMobile ? '16px' : '18px'}; line-height: 1.6;">
-                        ✅ Your card is downloaded<br>
-                        ✅ Message is copied
+                <div style="background: white; border-radius: 24px; padding: ${isMobile ? '32px 24px' : '40px'}; max-width: 450px; width: 100%; text-align: center; animation: slideUp 0.3s;">
+                    <div style="font-size: 80px; margin-bottom: 16px;">📸</div>
+                    <h3 style="color: #E1306C; margin-bottom: 16px; font-size: ${isMobile ? '26px' : '30px'}; font-weight: bold;">Share on Instagram</h3>
+                    <p style="color: #10B981; margin-bottom: 20px; font-size: ${isMobile ? '17px' : '19px'}; font-weight: 600;">
+                        ✅ Card Downloaded<br>
+                        ✅ Message Copied
                     </p>
-                    <div style="background: #FEF3F2; border-left: 4px solid #E1306C; padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: left;">
-                        <p style="color: #374151; font-size: ${isMobile ? '15px' : '16px'}; line-height: 1.7; margin: 0;">
-                            <strong style="color: #E1306C;">How to share:</strong><br>
+                    <div style="background: #FEF3F2; border-left: 4px solid #E1306C; padding: 20px; border-radius: 12px; margin-bottom: 24px; text-align: left;">
+                        <p style="color: #374151; font-size: ${isMobile ? '16px' : '17px'}; line-height: 1.8; margin: 0;">
+                            <strong style="color: #E1306C; display: block; margin-bottom: 12px;">📱 How to share:</strong>
                             1️⃣ Open Instagram app<br>
-                            2️⃣ Create a new Story or Post<br>
-                            3️⃣ Upload your downloaded card<br>
-                            4️⃣ Paste the copied message
+                            2️⃣ Create new Story or Post<br>
+                            3️⃣ Upload your card image<br>
+                            4️⃣ Paste the copied caption
                         </p>
                     </div>
                     <button onclick="this.closest('div[style*=fixed]').remove();" style="
                         background: linear-gradient(135deg, #E1306C 0%, #C13584 50%, #833AB4 100%);
                         color: white;
                         border: none;
-                        padding: ${isMobile ? '16px 28px' : '18px 32px'};
+                        padding: ${isMobile ? '18px 32px' : '20px 36px'};
                         border-radius: 14px;
-                        font-size: ${isMobile ? '17px' : '19px'};
+                        font-size: ${isMobile ? '18px' : '20px'};
                         font-weight: bold;
                         cursor: pointer;
                         width: 100%;
-                        box-shadow: 0 4px 12px rgba(225, 48, 108, 0.3);
+                        box-shadow: 0 4px 12px rgba(225, 48, 108, 0.4);
                     ">
                         Got it! 👍
                     </button>
@@ -1578,52 +1766,45 @@
             });
         }
 
-        function copyMessageAndClose(text) {
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(text).then(() => {
-                    // Create toast notification
-                    const toast = document.createElement('div');
-                    toast.style.cssText = `
-                        position: fixed;
-                        bottom: 30px;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        background: #10B981;
-                        color: white;
-                        padding: 16px 28px;
-                        border-radius: 12px;
-                        font-size: 16px;
-                        font-weight: 600;
-                        z-index: 10002;
-                        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-                        animation: slideUp 0.3s;
-                    `;
-                    toast.textContent = '✅ Message copied!';
-                    document.body.appendChild(toast);
-                    
-                    setTimeout(() => {
-                        toast.style.animation = 'fadeOut 0.3s';
-                        setTimeout(() => toast.remove(), 300);
-                    }, 2000);
-                }).catch(() => {
-                    alert('Message copied to clipboard!');
-                });
-            } else {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                alert('Message copied to clipboard!');
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                
+                // Show toast notification
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    bottom: 30px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: #10B981;
+                    color: white;
+                    padding: 18px 32px;
+                    border-radius: 12px;
+                    font-size: 17px;
+                    font-weight: 600;
+                    z-index: 10002;
+                    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+                    animation: slideUp 0.3s;
+                `;
+                toast.textContent = '✅ Message copied to clipboard!';
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.animation = 'fadeOut 0.3s';
+                    setTimeout(() => toast.remove(), 300);
+                }, 2500);
+                
+                // Also download the card
+                downloadCardFromBlob();
+                
+            } catch (error) {
+                console.error('Clipboard error:', error);
+                alert('Message copied! Your card has also been downloaded.');
             }
         }
 
-        async function downloadCardSilently() {
-            // This function is no longer needed, removed
-        }
-
+        // Input validation
         document.getElementById('nameInput').addEventListener('input', function() {
             const btn = document.getElementById('startBtn');
             btn.disabled = this.value.trim().length < 2;
@@ -1639,8 +1820,18 @@
 
         // Preload all images on page load
         window.addEventListener('load', function() {
-            console.log('Page loaded, preloading images...');
+            console.log('✅ Page loaded successfully');
             preloadImages();
+        });
+
+        // Error handler
+        window.addEventListener('error', function(e) {
+            console.error('❌ Global error:', e.error);
+        });
+
+        // Unhandled promise rejection handler
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('❌ Unhandled promise rejection:', e.reason);
         });
     </script>
 </body>
