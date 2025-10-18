@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Light the Cracker Within - Diwali 2024</title>
@@ -494,100 +494,181 @@
             font-size: 20px;
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 640px) {
+        /* Mobile Responsive - Optimized for all devices */
+        @media (max-width: 768px) {
+            html {
+                font-size: 18px;
+            }
+            
             body {
-                padding: 16px;
+                padding: 16px 12px;
             }
+            
             .card {
-                padding: 28px 24px;
+                padding: 32px 24px;
+                border-radius: 20px;
             }
+            
             .logo {
-                width: 110px;
-                height: 110px;
+                width: 120px;
+                height: 120px;
             }
+            
             .firework-decoration {
-                font-size: 48px;
+                font-size: 52px;
             }
+            
+            h1 {
+                font-size: 36px;
+                margin-bottom: 24px;
+                line-height: 1.2;
+            }
+            
+            h2 {
+                font-size: 26px;
+                line-height: 1.4;
+                margin-bottom: 20px;
+            }
+            
+            .result-title {
+                font-size: 40px;
+                margin: 16px 0;
+            }
+            
+            .result-subtitle {
+                font-size: 24px;
+                margin-bottom: 16px;
+            }
+            
+            .result-message {
+                font-size: 20px;
+                line-height: 1.6;
+            }
+            
+            .custom-line {
+                font-size: 17px;
+                line-height: 1.7;
+            }
+            
+            .footer-message {
+                font-size: 19px;
+                margin-top: 24px;
+                padding-top: 24px;
+            }
+            
+            .button-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .sweet-image {
+                width: 240px;
+                height: 240px;
+                margin: 20px auto;
+            }
+            
+            .cracker-progress-container {
+                padding: 0 16px;
+                margin-bottom: 36px;
+            }
+            
+            .fuse-line {
+                height: 8px;
+                margin-bottom: 90px;
+            }
+            
+            .cone-cracker {
+                right: -55px;
+                top: -22px;
+            }
+            
+            .blast-screen {
+                font-size: 120px;
+            }
+            
+            .option-btn {
+                font-size: 17px;
+                padding: 18px 16px;
+                line-height: 1.5;
+            }
+            
+            button {
+                font-size: 19px;
+                padding: 18px 32px;
+                border-radius: 14px;
+            }
+            
+            input[type="text"] {
+                font-size: 18px;
+                padding: 18px 24px;
+            }
+            
+            .disclaimer-card {
+                padding: 32px 24px;
+            }
+            
+            .disclaimer-card h2 {
+                font-size: 26px;
+            }
+            
+            .disclaimer-card p {
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            html {
+                font-size: 17px;
+            }
+            
+            .card {
+                padding: 28px 20px;
+            }
+            
             h1 {
                 font-size: 32px;
-                margin-bottom: 24px;
             }
+            
             h2 {
                 font-size: 24px;
-                line-height: 1.3;
             }
+            
             .result-title {
                 font-size: 36px;
             }
-            .result-subtitle {
-                font-size: 22px;
-            }
-            .result-message {
-                font-size: 19px;
-            }
-            .custom-line {
-                font-size: 16px;
-            }
-            .button-grid {
-                grid-template-columns: 1fr;
-            }
+            
             .sweet-image {
                 width: 220px;
                 height: 220px;
             }
-            .cracker-progress-container {
-                padding: 0 12px;
-                margin-bottom: 32px;
-            }
-            .fuse-line {
-                margin-bottom: 80px;
-            }
-            .cone-cracker {
-                right: -50px;
-                top: -20px;
-            }
-            .blast-screen {
-                font-size: 100px;
-            }
-            .option-btn {
-                font-size: 16px;
-                padding: 16px;
-            }
-            button {
-                font-size: 18px;
-                padding: 16px 28px;
-            }
-            input[type="text"] {
-                font-size: 16px;
-                padding: 16px 20px;
-            }
-            .disclaimer-card {
-                padding: 28px;
+            
+            .logo {
+                width: 110px;
+                height: 110px;
             }
         }
 
-        @media (max-width: 400px) {
+        @media (max-width: 380px) {
+            html {
+                font-size: 16px;
+            }
+            
             h1 {
                 font-size: 28px;
             }
-            .logo {
-                width: 95px;
-                height: 95px;
-            }
-            .firework-decoration {
-                font-size: 42px;
-            }
-            .sweet-image {
-                width: 190px;
-                height: 190px;
-            }
-            .cone-cracker {
-                right: -45px;
-                transform: scale(0.9);
-            }
+            
             .result-title {
                 font-size: 32px;
+            }
+            
+            .sweet-image {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .cone-cracker {
+                right: -45px;
+                transform: scale(0.85);
             }
         }
 
@@ -750,8 +831,8 @@
             <div class="logo" style="margin: 0 auto 12px;">
                 <img src="https://framerusercontent.com/images/otpXuKdG3uW4Up8ICaqstwvlg4o.png?scale-down-to=512" alt="Make Eazy" id="resultLogo">
             </div>
-            <div class="firework-decoration" style="font-size: 42px; margin-bottom: 8px;">🎆</div>
-            <h1 style="color: #32509F; font-size: 40px; margin: 12px 0;">Happy Diwali!</h1>
+            <h1 style="color: #32509F; font-size: 40px; margin: 12px 0 4px 0;">Light the Cracker Within!</h1>
+            <h1 style="color: #32509F; font-size: 36px; margin: 4px 0 12px 0;">Happy Diwali! 🎆</h1>
             <h2 style="color: #F77F00; font-size: 36px; margin: 12px 0 20px 0;" id="userName"></h2>
             
             <img id="sweetImage" class="sweet-image" src="" alt="Sweet">
@@ -1257,12 +1338,6 @@
 
         async function downloadCard() {
             try {
-                // Show loading
-                const loadingDiv = document.createElement('div');
-                loadingDiv.className = 'loading-overlay';
-                loadingDiv.textContent = 'Generating your card...';
-                document.body.appendChild(loadingDiv);
-
                 const card = document.getElementById('downloadCard');
                 
                 // Wait for images to load
@@ -1292,15 +1367,9 @@
                 link.href = canvas.toDataURL('image/png', 1.0);
                 link.click();
                 
-                loadingDiv.remove();
                 console.log('Card downloaded successfully:', filename);
-                return canvas;
             } catch (error) {
                 console.error('Download failed:', error);
-                const loadingDiv = document.querySelector('.loading-overlay');
-                if (loadingDiv) loadingDiv.remove();
-                alert('Download failed. Please try again or take a screenshot of your result card.');
-                return null;
             }
         }
 
@@ -1308,81 +1377,144 @@
             try {
                 const shareText = `🎇 I have earned the title of "${resultData.sweet.name}" - ${resultData.sweet.title}! What about you? Light your cracker within this Diwali! 🪔\n\nVisit: https://makeeazy.in/diwali2025`;
                 
-                // First download the card
-                const canvas = await downloadCard();
+                // First, silently download the card in background
+                downloadCardSilently();
                 
-                if (!canvas) {
-                    // If download failed, just share text
-                    if (navigator.share) {
-                        try {
-                            await navigator.share({
-                                title: 'My Diwali Sweet Personality 🎇',
-                                text: shareText
-                            });
-                            return;
-                        } catch (e) {
-                            if (e.name === 'AbortError') return;
-                        }
-                    }
-                    
-                    // Fallback: copy text
-                    if (navigator.clipboard) {
-                        await navigator.clipboard.writeText(shareText);
-                        alert('✅ Message copied! Your card has been downloaded. Share both with your friends!');
-                    } else {
-                        prompt('Copy this message:', shareText);
-                    }
+                // For mobile - direct WhatsApp share
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                
+                if (isMobile) {
+                    // Open WhatsApp directly with text
+                    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+                    window.open(whatsappUrl, '_blank');
                     return;
                 }
                 
-                // Try to share with Web Share API
+                // For desktop - try Web Share API first
                 if (navigator.share) {
-                    try {
-                        // Convert canvas to blob
-                        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1.0));
-                        const file = new File([blob], `Diwali-${userName}-${resultData.sweet.name}.png`, { 
-                            type: 'image/png' 
-                        });
-                        
-                        const shareData = {
-                            title: 'My Diwali Sweet Personality 🎇',
-                            text: shareText,
-                            files: [file]
-                        };
-                        
-                        if (navigator.canShare && navigator.canShare(shareData)) {
-                            await navigator.share(shareData);
-                            console.log('Shared successfully with image');
-                            return;
-                        }
-                    } catch (shareErr) {
-                        console.log('File share not supported, trying text share:', shareErr.message);
-                    }
-                    
-                    // Fallback to text-only share
                     try {
                         await navigator.share({
                             title: 'My Diwali Sweet Personality 🎇',
                             text: shareText
                         });
                         return;
-                    } catch (textShareErr) {
-                        if (textShareErr.name === 'AbortError') return;
+                    } catch (shareErr) {
+                        if (shareErr.name === 'AbortError') return;
                     }
                 }
                 
-                // Final fallback: copy text and alert
-                if (navigator.clipboard) {
-                    await navigator.clipboard.writeText(shareText);
-                    alert('✅ Your card has been downloaded and the message is copied! Now you can share both together on WhatsApp, Instagram, or any platform!');
-                } else {
-                    prompt('Your card is downloaded! Copy this message to share:', shareText);
-                }
+                // Fallback - show share options modal
+                showShareModal(shareText);
                 
             } catch (error) {
                 console.error('Share error:', error);
-                alert('Your card has been downloaded! You can now share it manually with the message about your result.');
+                // Silent fallback
+                const shareText = `🎇 I have earned the title of "${resultData.sweet.name}" - ${resultData.sweet.title}! What about you? Light your cracker within this Diwali! 🪔\n\nVisit: https://makeeazy.in/diwali2025`;
+                const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+                window.open(whatsappUrl, '_blank');
             }
+        }
+
+        async function downloadCardSilently() {
+            try {
+                const card = document.getElementById('downloadCard');
+                
+                const images = card.getElementsByTagName('img');
+                await Promise.all(Array.from(images).map(img => {
+                    if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
+                    return new Promise((resolve) => {
+                        img.onload = resolve;
+                        img.onerror = resolve;
+                        setTimeout(resolve, 2000);
+                    });
+                }));
+                
+                const canvas = await html2canvas(card, {
+                    scale: 3,
+                    backgroundColor: '#ffffff',
+                    useCORS: true,
+                    allowTaint: false,
+                    logging: false
+                });
+                
+                const link = document.createElement('a');
+                const filename = `Diwali-${userName}-${resultData.sweet.name}.png`.replace(/\s+/g, '-');
+                link.download = filename;
+                link.href = canvas.toDataURL('image/png', 1.0);
+                link.click();
+                
+                console.log('Card downloaded silently');
+            } catch (error) {
+                console.error('Silent download failed:', error);
+            }
+        }
+
+        function showShareModal(shareText) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                padding: 20px;
+                animation: fadeIn 0.3s;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 32px; max-width: 400px; text-align: center; animation: slideUp 0.3s;">
+                    <h3 style="color: #32509F; margin-bottom: 20px; font-size: 24px;">Share Your Result! 🎉</h3>
+                    <p style="color: #6B7280; margin-bottom: 24px; font-size: 16px; line-height: 1.6;">
+                        Your card has been downloaded! Now share it with your message.
+                    </p>
+                    <button onclick="window.open('https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}', '_blank'); this.closest('div[style*=fixed]').remove();" style="
+                        background: #25D366;
+                        color: white;
+                        border: none;
+                        padding: 16px 32px;
+                        border-radius: 12px;
+                        font-size: 18px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        width: 100%;
+                        margin-bottom: 12px;
+                    ">📱 Share on WhatsApp</button>
+                    <button onclick="navigator.clipboard.writeText('${shareText.replace(/'/g, "\\'")}').then(() => { alert('Message copied! Open Instagram and paste it.'); this.closest('div[style*=fixed]').remove(); });" style="
+                        background: #E1306C;
+                        color: white;
+                        border: none;
+                        padding: 16px 32px;
+                        border-radius: 12px;
+                        font-size: 18px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        width: 100%;
+                        margin-bottom: 12px;
+                    ">📸 Copy for Instagram</button>
+                    <button onclick="this.closest('div[style*=fixed]').remove();" style="
+                        background: transparent;
+                        color: #6B7280;
+                        border: none;
+                        padding: 12px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        width: 100%;
+                    ">Close</button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
         }
 
         document.getElementById('nameInput').addEventListener('input', function() {
